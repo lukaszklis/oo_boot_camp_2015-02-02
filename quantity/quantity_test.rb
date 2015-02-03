@@ -1,7 +1,7 @@
 # Copyright 2015 by Fred George. May be copied with this notice, but not used in classroom training.
 
 require 'minitest/autorun'
-require_relative 'quantity'
+require_relative 'unit'
 
 # Confirms Quantity works correctly
 class QuantityTest < Minitest::Test

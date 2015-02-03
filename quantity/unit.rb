@@ -1,5 +1,7 @@
 # Copyright 2015 by Fred George. May be copied with this notice, but not used in classroom training.
 
+require_relative 'quantity'
+
 # Understands a specific metric
 class Unit
   attr_reader :base_unit_count
@@ -24,12 +26,12 @@ class Unit
       end
     end
 
-  TEASPOONS = new('teaspoons')
-  TABLESPOONS = new('tablespoons', TEASPOONS, 3)
-  OUNCES = new('ounces', TABLESPOONS, 2)
-  CUPS = new('cups', OUNCES, 8)
-  PINTS = new('pints', CUPS, 2)
-  QUARTS = new('quarts', PINTS, 2)
-  GALLONS = new('gallons', QUARTS, 4)
+  teaspoons = new('teaspoons')
+  tablespoons = new('tablespoons', teaspoons, 3)
+  ounces = new('ounces', tablespoons, 2)
+  cups = new('cups', ounces, 8)
+  pints = new('pints', cups, 2)
+  quarts = new('quarts', pints, 2)
+  gallons = new('gallons', quarts, 4)
 
 end

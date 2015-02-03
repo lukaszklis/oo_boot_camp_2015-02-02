@@ -1,7 +1,5 @@
 # Copyright 2015 by Fred George. May be copied with this notice, but not used in classroom training.
 
-require_relative 'unit'
-
 # Understands a specific measurement
 class Quantity
   attr_reader :amount, :unit

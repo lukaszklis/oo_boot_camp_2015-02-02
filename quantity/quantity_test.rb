@@ -30,4 +30,10 @@ class QuantityTest < Minitest::Test
     assert 1.1.pints < 24.ounces
   end
 
+  def test_arithmetic
+    assert_equal 14.ounces, 2.cups - 4.tablespoons
+    assert_equal -14.ounces, 4.tablespoons - 2.cups
+    assert_equal -14.ounces, -(14.ounces)
+  end
+
 end

@@ -4,20 +4,34 @@ require_relative 'quantity'
 
 # Understands a specific metric
 class Unit
-  attr_reader :base_unit_count
-  protected :base_unit_count
+  attr_reader :type, :base_unit_count
+  protected :type, :base_unit_count
 
-  def initialize(plural_name, relative_unit = nil, amount = 1)
+  def initialize(type, plural_name, relative_unit = nil, amount = 1)
+    @type = type
     @base_unit_count = (relative_unit ? relative_unit.base_unit_count : 1) * amount.to_f
     create_numeric_method(plural_name)
   end
 
+  def self.volume(plural_name, relative_unit = nil, amount = 1)
+    new(:volume, plural_name, relative_unit, amount)
+  end
+
+  def self.distance(plural_name, relative_unit = nil, amount = 1)
+    new(:distance, plural_name, relative_unit, amount)
+  end
+
   def converted_amount(other, other_amount)
+    raise "Incompatible unit types" unless self.compatible? other
     other_amount * other.base_unit_count / self.base_unit_count
   end
 
   def amount_hash(amount)
     (base_unit_count * amount).hash
+  end
+
+  def compatible?(other)
+    self.type == other.type
   end
 
   private
@@ -31,12 +45,17 @@ class Unit
       end
     end
 
-  teaspoons = new('teaspoons')
-  tablespoons = new('tablespoons', teaspoons, 3)
-  ounces = new('ounces', tablespoons, 2)
-  cups = new('cups', ounces, 8)
-  pints = new('pints', cups, 2)
-  quarts = new('quarts', pints, 2)
-  gallons = new('gallons', quarts, 4)
+  teaspoons = volume('teaspoons')
+  tablespoons = volume('tablespoons', teaspoons, 3)
+  ounces = volume('ounces', tablespoons, 2)
+  cups = volume('cups', ounces, 8)
+  pints = volume('pints', cups, 2)
+  quarts = volume('quarts', pints, 2)
+  gallons = volume('gallons', quarts, 4)
+
+  inches = distance('inches')
+  feet = distance('feet', inches, 12)
+  yards = distance('yards', feet, 3)
+  miles = distance('miles', yards, 1760)
 
 end

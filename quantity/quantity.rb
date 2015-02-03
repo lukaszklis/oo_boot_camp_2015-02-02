@@ -14,6 +14,7 @@ class Quantity
 
   def ==(other)
     return false unless other.is_a? self.class
+    return false unless self.unit.compatible?(other.unit)
     (self.amount - converted_amount(other)).abs < EPSILON
   end
 

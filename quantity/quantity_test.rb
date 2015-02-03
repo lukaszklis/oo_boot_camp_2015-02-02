@@ -18,6 +18,14 @@ class QuantityTest < Minitest::Test
     assert_equal 1.5.pints, 24.ounces
     refute_equal 2.ounces, 2.cups
     assert_equal 9.feet, 3.yards
+    assert_equal 0.celcius, 32.fahrenheit
+    assert_equal 32.fahrenheit, 0.celcius
+    assert_equal -40.celcius, -40.fahrenheit
+    assert_equal -40.fahrenheit, -40.celcius
+    assert_equal 10.celcius, 50.fahrenheit
+    assert_equal 50.fahrenheit, 10.celcius
+    assert_equal 100.celcius, 212.fahrenheit
+    assert_equal 212.fahrenheit, 100.celcius
   end
 
   def test_inequality_of_different_unit_types

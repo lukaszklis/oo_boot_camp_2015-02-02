@@ -2,10 +2,11 @@
 
 # Understands a specific measurement
 class Quantity
+  include Comparable
   attr_reader :amount, :unit
   protected :amount, :unit
 
-  DELTA = 0.0000001
+  EPSILON = 0.0000001
 
   def initialize(amount, unit)
     @amount, @unit = amount, unit
@@ -13,7 +14,12 @@ class Quantity
 
   def ==(other)
     return false unless other.is_a? self.class
-    (self.amount - converted_amount(other)).abs < DELTA
+    (self.amount - converted_amount(other)).abs < EPSILON
+  end
+
+  def <=>(other)
+    return 0 if self == other
+    self.amount <=> converted_amount(other)
   end
 
   def hash

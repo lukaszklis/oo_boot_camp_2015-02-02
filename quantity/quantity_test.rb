@@ -23,4 +23,10 @@ class QuantityTest < Minitest::Test
     assert_equal 3.ounces.hash, 3.ounces.hash
   end
 
+  def test_comparison
+    assert 3.ounces > 2.ounces
+    assert 2.ounces <= 3.ounces
+    assert 1.1.pints < 24.ounces
+  end
+
 end

@@ -23,7 +23,7 @@ class Quantity
   end
 
   def hash
-    unit.hash + amount.hash
+    unit.amount_hash(amount)
   end
 
   private

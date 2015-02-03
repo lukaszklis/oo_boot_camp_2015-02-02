@@ -7,16 +7,16 @@ require_relative 'quantity'
 class QuantityTest < Minitest::Test
 
   def test_equality_of_like_units
-    assert_equal(Quantity.new(3, Unit::OUNCES), Quantity.new(3, Unit::OUNCES))
-    refute_equal(Quantity.new(3, Unit::OUNCES), Quantity.new(4, Unit::OUNCES))
-    refute_equal(Quantity.new(3, Unit::OUNCES), Object.new)
-    refute_equal(Quantity.new(3, Unit::OUNCES), nil)
+    assert_equal 3.ounces, 3.ounces
+    refute_equal 3.ounces, 4.ounces
+    refute_equal 3.ounces, Object.new
+    refute_equal 3.ounces, nil
   end
 
   def test_equality_of_unlike_units
-    assert_equal(Quantity.new(24, Unit::OUNCES), Quantity.new(1.5, Unit::PINTS))
-    assert_equal(Quantity.new(1.5, Unit::PINTS), Quantity.new(24, Unit::OUNCES))
-    refute_equal(Quantity.new(2, Unit::OUNCES), Quantity.new(2, Unit::CUPS))
+    assert_equal 24.ounces, 1.5.pints
+    assert_equal 1.5.pints, 24.ounces
+    refute_equal 2.ounces, 2.cups
   end
 
 end

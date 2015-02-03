@@ -19,4 +19,8 @@ class QuantityTest < Minitest::Test
     refute_equal 2.ounces, 2.cups
   end
 
+  def test_hash
+    assert_equal 3.ounces.hash, 3.ounces.hash
+  end
+
 end

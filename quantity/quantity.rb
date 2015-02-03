@@ -16,6 +16,10 @@ class Quantity
     (self.amount - converted_amount(other)).abs < DELTA
   end
 
+  def hash
+    unit.hash + amount.hash
+  end
+
   private
 
     def converted_amount(other)

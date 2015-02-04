@@ -1,29 +1,29 @@
 # Copyright 2015 by Fred George. May be copied with this notice, but not used in classroom training.
 
-require_relative 'quantity'
+require_relative 'ratio_quantity'
 
 # Understands a specific metric
 class Unit
   attr_reader :type, :base_unit_count, :offset
   protected :type, :base_unit_count, :offset
 
-  def initialize(type, plural_name, relative_unit, amount, offset = 0)
+  def initialize(type, plural_name, quantity_class, relative_unit, amount, offset = 0)
     @type = type
     @base_unit_count = (relative_unit ? relative_unit.base_unit_count : 1) * amount.to_f
     @offset = offset
-    create_numeric_method(plural_name)
+    create_numeric_method(plural_name, quantity_class)
   end
 
   def self.volume(plural_name, relative_unit = nil, amount = 1)
-    new(:volume, plural_name, relative_unit, amount)
+    new(:volume, plural_name, RatioQuantity, relative_unit, amount)
   end
 
   def self.distance(plural_name, relative_unit = nil, amount = 1)
-    new(:distance, plural_name, relative_unit, amount)
+    new(:distance, plural_name, RatioQuantity, relative_unit, amount)
   end
 
   def self.temperature(plural_name, relative_unit = nil, amount = 1, offset = 0)
-    new(:temperature, plural_name, relative_unit, amount, offset)
+    new(:temperature, plural_name, IntervalQuantity, relative_unit, amount, offset)
   end
 
   def converted_amount(other, other_amount)
@@ -41,11 +41,11 @@ class Unit
 
   private
 
-    def create_numeric_method(plural_name)
+    def create_numeric_method(plural_name, quantity_class)
       unit = self
       Numeric.class_eval do
         define_method plural_name.to_s do
-          Quantity.new(self, unit)
+          quantity_class.new(self, unit)
         end
       end
     end
@@ -63,7 +63,7 @@ class Unit
   yards = distance('yards', feet, 3)
   miles = distance('miles', yards, 1760)
 
-  celcius = temperature('celcius')
-  fahrenheit = temperature('fahrenheit', celcius, 5/9.0, 32)
+  celsius = temperature('celsius')
+  fahrenheit = temperature('fahrenheit', celsius, 5/9.0, 32)
 
 end

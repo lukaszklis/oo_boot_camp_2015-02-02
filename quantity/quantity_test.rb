@@ -18,16 +18,16 @@ class QuantityTest < Minitest::Test
     assert_equal 1.5.pints, 24.ounces
     refute_equal 2.ounces, 2.cups
     assert_equal 9.feet, 3.yards
-    assert_equal 0.celcius, 32.fahrenheit
-    assert_equal 32.fahrenheit, 0.celcius
-    assert_equal -40.celcius, -40.fahrenheit
-    assert_equal -40.fahrenheit, -40.celcius
-    assert_equal 10.celcius, 50.fahrenheit
-    assert_equal 50.fahrenheit, 10.celcius
-    assert_equal 100.celcius, 212.fahrenheit
-    assert_equal 212.fahrenheit, 100.celcius
-    refute_equal 0.celcius, 0.fahrenheit
-    refute_equal 100.fahrenheit, 100.celcius
+    assert_equal 0.celsius, 32.fahrenheit
+    assert_equal 32.fahrenheit, 0.celsius
+    assert_equal -40.celsius, -40.fahrenheit
+    assert_equal -40.fahrenheit, -40.celsius
+    assert_equal 10.celsius, 50.fahrenheit
+    assert_equal 50.fahrenheit, 10.celsius
+    assert_equal 100.celsius, 212.fahrenheit
+    assert_equal 212.fahrenheit, 100.celsius
+    refute_equal 0.celsius, 0.fahrenheit
+    refute_equal 100.fahrenheit, 100.celsius
   end
 
   def test_inequality_of_different_unit_types
@@ -55,6 +55,11 @@ class QuantityTest < Minitest::Test
 
   def test_mixed_type_arithmetic
     assert_raises(RuntimeError) { 2.feet + 3.ounces }
+  end
+
+  def test_temperature_arithmetic_invalid
+    assert_raises(NoMethodError) { 3.celsius + 2.fahrenheit}
+    assert_raises(NoMethodError) { -(-2.fahrenheit) }
   end
 
 end

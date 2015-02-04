@@ -1,7 +1,7 @@
 # Copyright 2015 by Fred George. May be copied with this notice, but not used in classroom training.
 
 # Understands a specific measurement
-class Quantity
+class IntervalQuantity
   include Comparable
   attr_reader :amount, :unit
   protected :amount, :unit
@@ -25,18 +25,6 @@ class Quantity
 
   def hash
     unit.amount_hash(amount)
-  end
-
-  def +(other)
-    Quantity.new(self.amount + converted_amount(other), self.unit)
-  end
-
-  def -@
-    Quantity.new(-amount, unit)
-  end
-
-  def -(other)
-    self + (-other)
   end
 
   private

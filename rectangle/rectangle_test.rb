@@ -16,4 +16,9 @@ class RectangleTest < Minitest::Test
     assert_equal 16, Rectangle.new(2, 6).perimeter
   end
 
+  def test_square
+    assert_equal 9, Rectangle.square(3).area
+    assert_equal 12, Rectangle.square(3).perimeter
+  end
+
 end

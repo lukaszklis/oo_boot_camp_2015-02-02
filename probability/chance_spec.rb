@@ -1,4 +1,4 @@
-# Copyright 2014 by Fred George. May be copied with this notice, but not used in classroom training.
+# Copyright 2015 by Fred George. May be copied with this notice, but not used in classroom training.
 
 require 'rspec'
 require_relative 'chance'

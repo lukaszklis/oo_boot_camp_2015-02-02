@@ -55,10 +55,12 @@ class QuantityTest < Minitest::Test
 
   def test_mixed_type_arithmetic
     assert_raises(RuntimeError) { 2.feet + 3.ounces }
+    assert_raises(RuntimeError) { 2.feet + 3.celsius }
   end
 
   def test_temperature_arithmetic_invalid
     assert_raises(NoMethodError) { 3.celsius + 2.fahrenheit}
+    assert_raises(NoMethodError) { 3.celsius + 2.ounces}
     assert_raises(NoMethodError) { -(-2.fahrenheit) }
   end
 

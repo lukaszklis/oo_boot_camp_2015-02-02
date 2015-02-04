@@ -1,4 +1,4 @@
-# Copyright 2014 by Fred George. May be copied with this notice, but not used in classroom training.
+# Copyright 2015 by Fred George. May be copied with this notice, but not used in classroom training.
 
 # Understands liklihood of a specific event occurring
 class Chance

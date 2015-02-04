@@ -7,12 +7,20 @@ class Rectangle
     @height, @width = height, width
   end
 
+  def self.square(side)
+    self.new(side, side)
+  end
+
   def area
     @height * @width
   end
 
   def perimeter
     2 * (@height + @width)
+  end
+
+  def square?
+    @height == @width
   end
 
 end

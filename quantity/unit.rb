@@ -32,7 +32,7 @@ class Unit
   end
 
   def amount_hash(amount)
-    (base_unit_count * amount).hash
+    (base_unit_count * amount).hash + type.hash * 23
   end
 
   def compatible?(other)

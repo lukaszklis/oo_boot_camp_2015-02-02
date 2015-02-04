@@ -26,6 +26,8 @@ class QuantityTest < Minitest::Test
     assert_equal 50.fahrenheit, 10.celcius
     assert_equal 100.celcius, 212.fahrenheit
     assert_equal 212.fahrenheit, 100.celcius
+    refute_equal 0.celcius, 0.fahrenheit
+    refute_equal 100.fahrenheit, 100.celcius
   end
 
   def test_inequality_of_different_unit_types

@@ -27,6 +27,10 @@ class IntervalQuantity
     unit.amount_hash(amount)
   end
 
+  def better_than?(other)
+    (self <=> other) > 0
+  end
+
   private
 
     def converted_amount(other)

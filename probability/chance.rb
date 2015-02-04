@@ -31,6 +31,10 @@ class Chance
     ~(~self & ~other)
   end
 
+  def better_than?(other)
+    self.value > other.value
+  end
+
 end
 
 class Numeric

@@ -7,23 +7,11 @@ class Unit
   attr_reader :type, :base_unit_count, :offset
   protected :type, :base_unit_count, :offset
 
-  def initialize(type, plural_name, quantity_class, relative_unit, amount, offset = 0)
-    @type = type
-    @base_unit_count = (relative_unit ? relative_unit.base_unit_count : 1) * amount.to_f
+  def initialize(plural_name, relative_unit, amount = 1, offset = 0)
+    @type = relative_unit.type
+    @base_unit_count = relative_unit.base_unit_count * amount.to_f
     @offset = offset
-    create_numeric_method(plural_name, quantity_class)
-  end
-
-  def self.volume(plural_name, relative_unit = nil, amount = 1)
-    new(:volume, plural_name, RatioQuantity, relative_unit, amount)
-  end
-
-  def self.distance(plural_name, relative_unit = nil, amount = 1)
-    new(:distance, plural_name, RatioQuantity, relative_unit, amount)
-  end
-
-  def self.temperature(plural_name, relative_unit = nil, amount = 1, offset = 0)
-    new(:temperature, plural_name, IntervalQuantity, relative_unit, amount, offset)
+    create_numeric_method(plural_name, @type.quantity_class)
   end
 
   def converted_amount(other, other_amount)
@@ -50,20 +38,27 @@ class Unit
       end
     end
 
-  teaspoons = volume('teaspoons')
-  tablespoons = volume('tablespoons', teaspoons, 3)
-  ounces = volume('ounces', tablespoons, 2)
-  cups = volume('cups', ounces, 8)
-  pints = volume('pints', cups, 2)
-  quarts = volume('quarts', pints, 2)
-  gallons = volume('gallons', quarts, 4)
+  class BaseUnit
+    attr_reader :type, :quantity_class
+    def initialize(quantity_class); @quantity_class = quantity_class; end
+    def base_unit_count; 1; end
+    def type; self; end
+  end
 
-  inches = distance('inches')
-  feet = distance('feet', inches, 12)
-  yards = distance('yards', feet, 3)
-  miles = distance('miles', yards, 1760)
+  teaspoons = Unit.new('teaspoons', BaseUnit.new(RatioQuantity))
+  tablespoons = Unit.new('tablespoons', teaspoons, 3)
+  ounces = Unit.new('ounces', tablespoons, 2)
+  cups = Unit.new('cups', ounces, 8)
+  pints = Unit.new('pints', cups, 2)
+  quarts = Unit.new('quarts', pints, 2)
+  gallons = Unit.new('gallons', quarts, 4)
 
-  celsius = temperature('celsius')
-  fahrenheit = temperature('fahrenheit', celsius, 5/9.0, 32)
+  inches = Unit.new('inches', BaseUnit.new(RatioQuantity))
+  feet = Unit.new('feet', inches, 12)
+  yards = Unit.new('yards', feet, 3)
+  miles = Unit.new('miles', yards, 1760)
+
+  celsius = Unit.new('celsius', BaseUnit.new(IntervalQuantity))
+  fahrenheit = Unit.new('fahrenheit', celsius, 5/9.0, 32)
 
 end

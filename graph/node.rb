@@ -18,12 +18,8 @@ class Node
     neighbor
   end
 
-  def can_reach(destination, visited_nodes = [])
-    return true if self == destination
-    return false if visited_nodes.include? self
-    @neighbors.any? do |n|
-      n.can_reach(destination, visited_nodes << self)
-    end
+  def can_reach(destination)
+    self._hop_count(destination, no_visited_nodes) != UNREACHABLE
   end
 
   def hop_count(destination)

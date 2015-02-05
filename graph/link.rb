@@ -11,6 +11,10 @@ class Link
     @target._hop_count(destination, visited_nodes) + 1
   end
 
+  def _cost(destination, visited_nodes)
+    @target._cost(destination, visited_nodes) + @cost
+  end
+
   def to_s
     ">>#{cost}>>"
   end

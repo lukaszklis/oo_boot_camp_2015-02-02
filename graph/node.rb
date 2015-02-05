@@ -30,16 +30,30 @@ class Node
     end
   end
 
-  def to_s
-    @label
-  end
-
   def _hop_count(destination, visited_nodes)
     return 0 if self == destination
     return UNREACHABLE if visited_nodes.include?(self)
     @links.map do |link|
       link._hop_count(destination, visited_nodes.clone << self)
     end.min || UNREACHABLE
+  end
+
+  def cost(destination)
+    self._cost(destination, no_visited_nodes).tap do |result|
+      raise "No path from #{self} to #{destination}" if result == UNREACHABLE
+    end
+  end
+
+  def _cost(destination, visited_nodes)
+    return 0 if self == destination
+    return UNREACHABLE if visited_nodes.include?(self)
+    @links.map do |link|
+      link._cost(destination, visited_nodes.clone << self)
+    end.min || UNREACHABLE
+  end
+
+  def to_s
+    @label
   end
 
   private

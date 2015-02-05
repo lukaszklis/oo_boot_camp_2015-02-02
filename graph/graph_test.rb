@@ -30,4 +30,13 @@ class GraphTest < Minitest::Test
     assert_raises(RuntimeError) { B.hop_count G }
   end
 
+  def test_cost
+    assert_equal 0, A.cost(A)
+    assert_equal 6, B.cost(A)
+    assert_equal 5, B.cost(C)
+    assert_equal 15, C.cost(F)
+    assert_raises(RuntimeError) { A.cost B }
+    assert_raises(RuntimeError) { B.cost G }
+  end
+
 end

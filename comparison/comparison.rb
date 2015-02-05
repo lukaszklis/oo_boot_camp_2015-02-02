@@ -11,7 +11,7 @@ class Comparison
     #
     # elements = elements.flatten
     # champion = elements[0]
-    # elmements.each do |challenger|
+    # elements.each do |challenger|
     #   champion = challenger.better_than?(champion) ? challenger : champion
     # end
     # champion

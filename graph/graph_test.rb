@@ -7,10 +7,10 @@ require_relative 'node'
 class GraphTest < Minitest::Test
 
   ('A'..'G').each { |label| const_set(label.to_sym, Node.new(label)) }
-  B > A
-  B > C > D > E > B > F
-  C > D
-  C > E
+  B > [A, 6]
+  B > [C, 5] > [D, 2] > [E, 3] > [B, 4] > [F, 7]
+  C > [D, 1]
+  C > [E, 8]
 
   def test_can_reach
     assert B.can_reach A

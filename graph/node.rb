@@ -1,5 +1,7 @@
 # Copyright 2015 by Fred George. May be copied with this notice, but not used in classroom training.
 
+require_relative 'link'
+
 # Understands its neighbors
 class Node
 
@@ -10,12 +12,12 @@ class Node
 
   def initialize(label)
     @label = label
-    @neighbors = []
+    @links = []
   end
 
-  def >(neighbor)
-    @neighbors << neighbor
-    neighbor
+  def >(neighbor_cost_pair)
+    @links << Link.new(*neighbor_cost_pair)
+    neighbor_cost_pair.first
   end
 
   def can_reach(destination)
@@ -32,15 +34,13 @@ class Node
     @label
   end
 
-  protected
-
-    def _hop_count(destination, visited_nodes)
-      return 0 if self == destination
-      return UNREACHABLE if visited_nodes.include?(self)
-      @neighbors.map do |n|
-        n._hop_count(destination, visited_nodes.clone << self) + 1
-      end.min || UNREACHABLE
-    end
+  def _hop_count(destination, visited_nodes)
+    return 0 if self == destination
+    return UNREACHABLE if visited_nodes.include?(self)
+    @links.map do |link|
+      link._hop_count(destination, visited_nodes.clone << self)
+    end.min || UNREACHABLE
+  end
 
   private
 

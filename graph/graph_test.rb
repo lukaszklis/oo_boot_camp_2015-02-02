@@ -25,7 +25,7 @@ class GraphTest < Minitest::Test
     assert_equal 0, A.hop_count(A)
     assert_equal 1, B.hop_count(A)
     assert_equal 1, B.hop_count(C)
-    assert_equal 4, C.hop_count(F)
+    assert_equal 3, C.hop_count(F)
     assert_raises(RuntimeError) { A.hop_count B }
     assert_raises(RuntimeError) { B.hop_count G }
   end

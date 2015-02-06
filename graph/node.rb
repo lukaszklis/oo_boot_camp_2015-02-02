@@ -20,11 +20,11 @@ class Node
   end
 
   def can_reach(destination)
-    self._path_to(destination, no_visited_nodes, Path::LEAST_HOP_COUNT) != Path::NONE
+    !self.paths_to(destination, no_visited_nodes).empty?
   end
 
   def hop_count(destination)
-    safe_path_to(destination, Path::LEAST_HOP_COUNT).hop_count
+    safe_paths_to(destination).min(&Path::LEAST_HOP_COUNT).hop_count
   end
 
   def cost(destination)
@@ -32,15 +32,7 @@ class Node
   end
 
   def path_to(destination)
-    safe_path_to(destination, Path::LEAST_COST)
-  end
-
-  def _path_to(destination, visited_nodes, cost_strategy)
-    return Path.new if self == destination
-    return Path::NONE if visited_nodes.include?(self)
-    @links.map do |link|
-      link._path_to(destination, visited_nodes + [self], cost_strategy)
-    end.min(&cost_strategy) || Path::NONE
+    safe_paths_to(destination).min &Path::LEAST_COST
   end
 
   def paths_to(destination, visited_nodes = [])
@@ -57,9 +49,9 @@ class Node
 
   private
 
-    def safe_path_to(destination, cost_strategy)
-      self._path_to(destination, no_visited_nodes, cost_strategy).tap do |result|
-        raise "No path from #{self} to #{destination}" if result == Path::NONE
+    def safe_paths_to(destination)
+      self.paths_to(destination, no_visited_nodes).tap do |results|
+        raise "No path from #{self} to #{destination}" if results.empty?
       end
     end
 
@@ -69,5 +61,6 @@ class Node
 
 end
 
-# path_to: Classes 1; Methods 10; Executable 17
-# NoPath:  Classes 1; Methods 10; Executable 17
+# path_to:  Classes 1; Methods 10; Executable 17
+# NoPath:   Classes 1; Methods 10; Executable 17
+# paths_to: Classes 1; Methods 10; Executable 16

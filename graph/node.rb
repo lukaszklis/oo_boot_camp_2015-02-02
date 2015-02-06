@@ -20,7 +20,7 @@ class Node
   end
 
   def can_reach(destination)
-    !self.paths_to(destination, no_visited_nodes).empty?
+    !self.paths_to(destination).empty?
   end
 
   def hop_count(destination)
@@ -50,17 +50,13 @@ class Node
   private
 
     def safe_paths_to(destination)
-      self.paths_to(destination, no_visited_nodes).tap do |results|
+      self.paths_to(destination).tap do |results|
         raise "No path from #{self} to #{destination}" if results.empty?
       end
-    end
-
-    def no_visited_nodes
-      []
     end
 
 end
 
 # path_to:  Classes 1; Methods 10; Executable 17
 # NoPath:   Classes 1; Methods 10; Executable 17
-# paths_to: Classes 1; Methods 10; Executable 16
+# paths_to: Classes 1; Methods 9;  Executable 15

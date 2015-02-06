@@ -71,4 +71,5 @@ end
 # TOTALS:
 # path_to:  Class 5; Methods 18; Executable 28
 # NoPath:   Class 6; Methods 21; Executable 31
-# paths_to: Class 5; Methods 18; Executable 27
+# paths_to: Class 5; Methods 17; Executable 26
+# =>        if 3; unless 0; else 0; x?y:z 0

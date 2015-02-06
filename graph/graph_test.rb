@@ -39,4 +39,21 @@ class GraphTest < Minitest::Test
     assert_raises(RuntimeError) { B.cost G }
   end
 
+  def test_path_to
+    assert_path A, A, 0, 0
+    assert_path B, A, 1, 6
+    assert_path B, C, 1, 5
+    assert_path C, F, 4, 15
+    assert_raises(RuntimeError) { A.path_to B }
+    assert_raises(RuntimeError) { B.path_to G }
+  end
+
+  private
+
+    def assert_path(source, destination, expected_hop_count, expected_cost)
+      result = source.path_to(destination)
+      assert_equal expected_hop_count, result.hop_count
+      assert_equal expected_cost, result.cost
+    end
+
 end

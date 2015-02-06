@@ -48,6 +48,15 @@ class GraphTest < Minitest::Test
     assert_raises(RuntimeError) { B.path_to G }
   end
 
+  def test_paths_to
+    assert_equal 1, A.paths_to(A).size
+    assert_equal 1, B.paths_to(A).size
+    assert_equal 1, B.paths_to(C).size
+    assert_equal 3, C.paths_to(F).size
+    assert_equal 0, A.paths_to(B).size
+    assert_equal 0, B.paths_to(G).size
+  end
+
   private
 
     def assert_path_traits(source, destination,

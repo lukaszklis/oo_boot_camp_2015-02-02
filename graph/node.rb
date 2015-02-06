@@ -43,6 +43,14 @@ class Node
     end.min(&cost_strategy) || Path::NONE
   end
 
+  def paths_to(destination, visited_nodes = [])
+    return [Path.new] if self == destination
+    return [] if visited_nodes.include?(self)
+    @links.inject([]) do |results, link|
+      results + link._paths_to(destination, visited_nodes + [self])
+    end
+  end
+
   def to_s
     @label
   end

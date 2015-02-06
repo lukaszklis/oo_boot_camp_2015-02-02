@@ -13,6 +13,12 @@ class Link
     end
   end
 
+  def _paths_to(destination, visited_nodes)
+    @target.paths_to(destination, visited_nodes).each do |path|
+      path.pre_pend(self, @cost)
+    end
+  end
+
 end
 
 # path_to: Class 1; Methods 2; Executable 3

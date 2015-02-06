@@ -10,13 +10,8 @@ class Link
     @target, @cost = target, cost
   end
 
-  def _cost(destination, visited_nodes, cost_strategy)
-    @target._cost(destination, visited_nodes, cost_strategy) +
-        cost_strategy.call(@cost)
-  end
-
-  def _path_to(destination, visited_nodes)
-    @target._path_to(destination, visited_nodes).tap do |result|
+  def _path_to(destination, visited_nodes, cost_strategy)
+    @target._path_to(destination, visited_nodes, cost_strategy).tap do |result|
       result.pre_pend(self) unless result.nil?
     end
   end

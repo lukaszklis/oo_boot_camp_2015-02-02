@@ -14,4 +14,12 @@ class CompositeQuantityTest < Minitest::Test
     assert_equal CompositeQuantity.new(1.ounces, -1.quarts, 2.5.feet), A - B
   end
 
+  def test_mismatched_composites
+    assert_raises(ArgumentError) { A + CompositeQuantity.new(4.ounces) }
+  end
+
+  def test_differen_size_composites
+    refute_equal A, CompositeQuantity.new(4.ounces)
+  end
+
 end

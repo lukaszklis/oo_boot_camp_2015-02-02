@@ -17,6 +17,10 @@ class RatioQuantity < IntervalQuantity
     self + (-other)
   end
 
+  def zero_value
+    RatioQuantity.new(0, unit)
+  end
+
   private
 
     def converted_amount(other)

@@ -19,6 +19,7 @@ class CompositeQuantity
   end
 
   def +(other)
+    raise ArgumentError.new('Composites have different sizes') unless self.quantities.size == other.quantities.size
     CompositeQuantity.new(
       self.quantities.zip(other.quantities).map { |left, right| left + right }
     )
@@ -30,6 +31,10 @@ class CompositeQuantity
 
   def -(other)
     self + -other
+  end
+
+  def zero_value
+    CompositeQuantity.new(quantities.map(&:zero_value))
   end
 
   def to_s

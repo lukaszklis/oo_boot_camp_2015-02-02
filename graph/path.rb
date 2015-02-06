@@ -8,10 +8,12 @@ class Path
 
   def initialize
     @links = []
+    @path_cost = 0
   end
 
-  def pre_pend(link)
+  def pre_pend(link, link_cost)
     @links.unshift(link)
+    @path_cost += link_cost
   end
 
   def hop_count
@@ -19,7 +21,7 @@ class Path
   end
 
   def cost
-    Link.total(@links)
+    @path_cost
   end
 
 end

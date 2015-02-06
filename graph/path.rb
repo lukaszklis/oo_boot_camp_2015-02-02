@@ -3,8 +3,6 @@
 # Understands a way that one Node can reach another specific Node
 class Path
 
-  LEAST_COST = lambda { |left, right| left.cost <=> right.cost }
-
   def initialize
     @links = []
   end

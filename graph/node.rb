@@ -50,7 +50,7 @@ class Node
     return nil if visited_nodes.include?(self)
     @links.map do |link|
       link._path_to(destination, visited_nodes.clone << self)
-    end.compact.min &Path::LEAST_COST || UNREACHABLE
+    end.compact.min { |left, right| left.cost <=> right.cost }
   end
 
   def to_s

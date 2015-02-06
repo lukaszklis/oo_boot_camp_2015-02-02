@@ -6,8 +6,6 @@ require_relative 'path'
 # Understands its neighbors
 class Node
 
-  UNREACHABLE = Float::INFINITY
-
   attr_reader :label
   protected :label
 
@@ -22,7 +20,7 @@ class Node
   end
 
   def can_reach(destination)
-    self._path_to(destination, no_visited_nodes, Path::LEAST_HOP_COUNT) != nil
+    self._path_to(destination, no_visited_nodes, Path::LEAST_HOP_COUNT) != Path::NONE
   end
 
   def hop_count(destination)
@@ -39,10 +37,10 @@ class Node
 
   def _path_to(destination, visited_nodes, cost_strategy)
     return Path.new if self == destination
-    return nil if visited_nodes.include?(self)
+    return Path::NONE if visited_nodes.include?(self)
     @links.map do |link|
       link._path_to(destination, visited_nodes + [self], cost_strategy)
-    end.compact.min &cost_strategy
+    end.min(&cost_strategy) || Path::NONE
   end
 
   def to_s
@@ -53,7 +51,7 @@ class Node
 
     def safe_path_to(destination, cost_strategy)
       self._path_to(destination, no_visited_nodes, cost_strategy).tap do |result|
-        raise "No path from #{self} to #{destination}" if result.nil?
+        raise "No path from #{self} to #{destination}" if result == Path::NONE
       end
     end
 
@@ -62,3 +60,6 @@ class Node
     end
 
 end
+
+# path_to: Classes 1; Methods 10; Executable 17
+# NoPath:  Classes 1; Methods 10; Executable 17

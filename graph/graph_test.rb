@@ -40,20 +40,25 @@ class GraphTest < Minitest::Test
   end
 
   def test_path_to
-    assert_path A, A, 0, 0
-    assert_path B, A, 1, 6
-    assert_path B, C, 1, 5
-    assert_path C, F, 4, 15
+    assert_path_traits A, A, 0, 0
+    assert_path_traits B, A, 1, 6
+    assert_path_traits B, C, 1, 5
+    assert_path_traits C, F, 4, 15
     assert_raises(RuntimeError) { A.path_to B }
     assert_raises(RuntimeError) { B.path_to G }
   end
 
   private
 
-    def assert_path(source, destination, expected_hop_count, expected_cost)
+    def assert_path_traits(source, destination,
+          expected_hop_count, expected_cost)
       result = source.path_to(destination)
       assert_equal expected_hop_count, result.hop_count
       assert_equal expected_cost, result.cost
     end
 
 end
+
+# TOTALS:
+# path_to: Class 5; Methods 18; Executable 28
+# path_to: Class 6; Methods 21; Executable 31

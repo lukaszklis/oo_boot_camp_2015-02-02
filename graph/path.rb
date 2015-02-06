@@ -24,4 +24,17 @@ class Path
     @path_cost
   end
 
+  class NoPath
+    def pre_pend(*); end # Deliberately empty
+    def hop_count; Float::INFINITY; end
+    def cost; Float::INFINITY; end
+  end
+
+  NONE = NoPath.new
+
 end
+
+
+
+# path_to: Class 3, Methods 6, Executable 8
+# path_to: Class 4, Methods 9, Executable 11

@@ -21,34 +21,22 @@ class Node
   end
 
   def can_reach(destination)
-    self._hop_count(destination, no_visited_nodes) != UNREACHABLE
+    self._cost(destination, no_visited_nodes) != UNREACHABLE
   end
 
   def hop_count(destination)
-    self._hop_count(destination, no_visited_nodes).tap do |result|
-      raise "No path from #{self} to #{destination}" if result == UNREACHABLE
-    end
-  end
-
-  def _hop_count(destination, visited_nodes)
-    return 0 if self == destination
-    return UNREACHABLE if visited_nodes.include?(self)
-    @links.map do |link|
-      link._hop_count(destination, visited_nodes.clone << self)
-    end.min || UNREACHABLE
+    safe_cost(destination, Link::LEAST_HOP_COUNT)
   end
 
   def cost(destination)
-    self._cost(destination, no_visited_nodes).tap do |result|
-      raise "No path from #{self} to #{destination}" if result == UNREACHABLE
-    end
+    safe_cost(destination, Link::LEAST_COST)
   end
 
-  def _cost(destination, visited_nodes)
+  def _cost(destination, visited_nodes, cost_strategy = Link::LEAST_COST)
     return 0 if self == destination
     return UNREACHABLE if visited_nodes.include?(self)
     @links.map do |link|
-      link._cost(destination, visited_nodes.clone << self)
+      link._cost(destination, visited_nodes.clone << self, cost_strategy)
     end.min || UNREACHABLE
   end
 
@@ -57,6 +45,12 @@ class Node
   end
 
   private
+
+    def safe_cost(destination, cost_strategy)
+      self._cost(destination, no_visited_nodes, cost_strategy).tap do |result|
+        raise "No path from #{self} to #{destination}" if result == UNREACHABLE
+      end
+    end
 
     def no_visited_nodes
       []

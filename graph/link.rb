@@ -3,16 +3,16 @@
 # Understands a connection to a particular Node
 class Link
 
+  LEAST_HOP_COUNT = lambda { |cost| 1 }
+  LEAST_COST = lambda { |cost| cost }
+
   def initialize(target, cost)
     @target, @cost = target, cost
   end
 
-  def _hop_count(destination, visited_nodes)
-    @target._hop_count(destination, visited_nodes) + 1
-  end
-
-  def _cost(destination, visited_nodes)
-    @target._cost(destination, visited_nodes) + @cost
+  def _cost(destination, visited_nodes, cost_strategy)
+    @target._cost(destination, visited_nodes, cost_strategy) +
+        cost_strategy.call(@cost)
   end
 
   def to_s

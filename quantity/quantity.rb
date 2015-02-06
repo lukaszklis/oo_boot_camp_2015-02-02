@@ -39,6 +39,10 @@ class Quantity
     self + (-other)
   end
 
+  def to_s
+    "#{amount} #{unit}"
+  end
+
   private
 
     def converted_amount(other)

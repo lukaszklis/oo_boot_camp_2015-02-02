@@ -8,9 +8,9 @@ class Unit
   protected :type, :base_unit_count, :offset
 
   def initialize(plural_name, relative_unit, amount = 1, offset = 0)
+    @plural_name, @offset = plural_name, offset
     @type = relative_unit.type
     @base_unit_count = relative_unit.base_unit_count * amount.to_f
-    @offset = offset
     create_numeric_method(plural_name, @type.quantity_class)
   end
 
@@ -25,6 +25,10 @@ class Unit
 
   def compatible?(other)
     self.type == other.type
+  end
+
+  def to_s
+    @plural_name
   end
 
   private
